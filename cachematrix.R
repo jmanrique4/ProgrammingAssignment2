@@ -1,15 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Las siguientes funciones recibe una matriz de dimension nxn y genera su inversa con registro en la memoria caché
 
-## Write a short comment describing this function
+## La función solve permite realizar diferentes tipos de calculos con vectores y matrices. 
+## La matriz que se ingrese a la funcion debe ser de dimensiones nxn
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  ma <- NULL 
+  set <- function(y) {
+    x <<- y
+    ma <<- NULL 
+  }
+  
+  get <- function() x 
+  setInv <- function(solve) ma <<- solve
+  getInv <- function() ma 
+ 
+  list(set = set, get = get,
+       setInv = setInv,
+       getInv = getInv)
+  
 }
 
-
-## Write a short comment describing this function
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  m <- x$getInv() 
+  
+  if(!is.null(m)) { 
+    message("Obtencion de datos en caché")
+    return(m) 
+  }
+  data <- x$get() 
+  m <- solve(data) 
+  x$setInv(m) 
+  message("Inversa de la Matriz")
+  print(m) 
 }
+
